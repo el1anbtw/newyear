@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            opacity: 0.8;
+            font-size: 1em;
+            user-select: none;
+            z-index: 1000;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div >
+            <h1 class = "header_text">Care to welcome New Year wrapped in the magic of our love?</h1>
+        </div>
+        <div class="gif_container">
+            <img src="https://media4.giphy.com/media/8y2dTK5wuPpgQ/giphy.gif?cid=ecf05e47bg76saeyts55l5orr8jowkf0dfj71f03ijfmfdxc&ep=v1_gifs_related&rid=giphy.gif&ct=s" alt="Cute animated illustration">
+        </div>
+        <div class = "buttons">
+            <button class="btn" id = "yesButton" onclick="nextPage()">Yes</button>
+            <button class="btn" id="noButton" onmouseover="moveButton()">No</button>
+
+    <script>
+        function nextPage() {
+                        window.location.href = "yes.html";
+                    }
+                    
+function moveButton() {
+  const noBtn = document.getElementById('noButton');
+  const padding = 50; // Increase the padding as needed
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+  // Ensure the random position is at least 'padding' pixels away from the edges
+  const safeX = Math.random() * maxX + padding;
+  const safeY = Math.random() * maxY + padding;
+  // Set new position
+  noBtn.style.left = `${Math.max(padding, safeX)}px`;
+  noBtn.style.top = `${Math.max(padding, safeY)}px`;
+}
+        // Function to create a snowflake element
+        function createSnowflake() {
+            const snowflakeElement = document.createElement('div');
+            snowflakeElement.classList.add('snowflake');
+            snowflakeElement.textContent = '❄'; // Snowflake emoji
+            document.body.appendChild(snowflakeElement);
+
+            const fontSize = Math.random() * 20 + 10;
+            snowflakeElement.style.fontSize = `${fontSize}px`;
+
+            const position = Math.random() * 100;
+            snowflakeElement.style.left = `${position}vw`;
+
+            snowflakeElement.style.animationName = 'fall';
+            snowflakeElement.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            snowflakeElement.style.animationTimingFunction = 'linear';
+            snowflakeElement.style.animationIterationCount = 'infinite';
+
+            // Remove snowflake after it has fallen out of view
+            snowflakeElement.addEventListener('animationiteration', () => {
+                snowflakeElement.remove();
+            });
+        }
+
+        // Create a new snowflake every 400ms
+        setInterval(createSnowflake, 400);
+    </script>
+</body>
+</html>
