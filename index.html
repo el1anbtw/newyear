@@ -1,91 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="css/styles.css">
+  <head>
+    <link rel="stylesheet" href="css/styles.css" />
     <style>
-        /* Styles for snowflakes */
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: #fff;
-            opacity: 0.8;
-            font-size: 1em;
-            user-select: none;
-            z-index: 1000;
-        }
+      /* Styles for snowflakes */
+      .snowflake {
+        position: absolute;
+        top: -10px;
+        color: #fff;
+        opacity: 0.8;
+        font-size: 1em;
+        user-select: none;
+        z-index: 1000;
+      }
 
-        /* Animation for snowflakes */
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+      /* Animation for snowflakes */
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
         }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div>
-            <!-- Header text -->
-            <h1 class="header_text">Care to welcome the New Year wrapped in the magic of our love?</h1>
-        </div>
-        <div class="gif_container">
-            <!-- Animated illustration -->
-            <img src="https://media4.giphy.com/media/8y2dTK5wuPpgQ/giphy.gif?cid=ecf05e47bg76saeyts55l5orr8jowkf0dfj71f03ijfmfdxc&ep=v1_gifs_related&rid=giphy.gif&ct=s" alt="Cute animated illustration">
-        </div>
-        <div class="buttons">
-            <!-- Yes button -->
-            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
-            <!-- No button -->
-            <button class="btn" id="noButton" onmouseover="moveButton()">No</button>
-        </div>
+      <div>
+        <!-- Header text -->
+        <h1 class="header_text">Care to welcome the New Year wrapped in the magic of our love?</h1>
+      </div>
+      <div class="gif_container">
+        <!-- Animated illustration -->
+        <img
+          src="https://media4.giphy.com/media/8y2dTK5wuPpgQ/giphy.gif?cid=ecf05e47bg76saeyts55l5orr8jowkf0dfj71f03ijfmfdxc&ep=v1_gifs_related&rid=giphy.gif&ct=s"
+          alt="Cute animated illustration"
+        />
+      </div>
+      <div class="buttons">
+        <!-- Yes button -->
+        <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
+        <!-- No button -->
+        <button class="btn" id="noButton" onmouseover="moveButton()">No</button>
+      </div>
     </div>
 
     <script>
-        // Function to navigate to the next page
-        function nextPage() {
-            window.location.href = "yes.html";
+      // Function to navigate to the next page
+      function nextPage() {
+        window.location.href = "yes.html";
+      }
+
+      // Initial position of the button
+      let originalPosition = null;
+
+      // Timer for returning the button
+      let returnTimer;
+
+      function moveButton() {
+        const noBtn = document.getElementById("noButton");
+
+        // Save the original position if it hasn't been set
+        if (!originalPosition) {
+          originalPosition = { left: noBtn.style.left, top: noBtn.style.top };
         }
 
-        // Function to move the "No" button randomly
-        function moveButton() {
-            const noBtn = document.getElementById('noButton');
-            const padding = 50; // Increase the padding as needed
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            // Ensure the random position is at least 'padding' pixels away from the edges
-            const safeX = Math.random() * maxX + padding;
-            const safeY = Math.random() * maxY + padding;
-            // Set new position
-            noBtn.style.left = `${Math.max(padding, safeX)}px`;
-            noBtn.style.top = `${Math.max(padding, safeY)}px`;
+        // Clear the timer if it's already running
+        if (returnTimer) {
+          clearTimeout(returnTimer);
         }
 
-        // Function to create a snowflake element
-        function createSnowflake() {
-            const snowflakeElement = document.createElement('div');
-            snowflakeElement.classList.add('snowflake');
-            snowflakeElement.textContent = '❄'; // Snowflake emoji
-            document.body.appendChild(snowflakeElement);
+        // Move the button to a random position
+        const padding = 50; // Increase the padding as needed
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+        const safeX = Math.random() * (maxX - 2 * padding) + padding;
+        const safeY = Math.random() * (maxY - 2 * padding) + padding;
+        noBtn.style.left = `${Math.max(padding, safeX)}px`;
+        noBtn.style.top = `${Math.max(padding, safeY)}px`;
 
-            const fontSize = Math.random() * 20 + 10;
-            snowflakeElement.style.fontSize = `${fontSize}px`;
+        // Set a timer to return the button
+        returnTimer = setTimeout(() => {
+          noBtn.style.left = originalPosition.left;
+          noBtn.style.top = originalPosition.top;
+        }, 3000); // Return the button after 3 seconds
+      }
 
-            const position = Math.random() * 100;
-            snowflakeElement.style.left = `${position}vw`;
+      // Function to create a snowflake element
+      function createSnowflake() {
+        const snowflakeElement = document.createElement("div");
+        snowflakeElement.classList.add("snowflake");
+        snowflakeElement.textContent = "❄"; // Snowflake emoji
+        document.body.appendChild(snowflakeElement);
 
-            snowflakeElement.style.animationName = 'fall';
-            snowflakeElement.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            snowflakeElement.style.animationTimingFunction = 'linear';
-            snowflakeElement.style.animationIterationCount = 'infinite';
+        const fontSize = Math.random() * 20 + 10;
+        snowflakeElement.style.fontSize = `${fontSize}px`;
 
-            // Remove snowflake after it has fallen out of view
-            snowflakeElement.addEventListener('animationiteration', () => {
-                snowflakeElement.remove();
-            });
-        }
+        const position = Math.random() * 100;
+        snowflakeElement.style.left = `${position}vw`;
 
-        // Create a new snowflake every 400ms
-        setInterval(createSnowflake, 400);
+        snowflakeElement.style.animationName = "fall";
+        snowflakeElement.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        snowflakeElement.style.animationTimingFunction = "linear";
+        snowflakeElement.style.animationIterationCount = "infinite";
+
+        // Remove snowflake after it has fallen out of view
+        snowflakeElement.addEventListener("animationiteration", () => {
+          snowflakeElement.remove();
+        });
+      }
+
+      // Create a new snowflake every 400ms
+      setInterval(createSnowflake, 400);
     </script>
-</body>
+  </body>
 </html>
