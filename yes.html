@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="css/yes_styles.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/yes_styles.css" />
 
-  <!-- Inline Styles -->
-  <style>
-    /* Styles for snowflake animation */
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      color: #fff;
-      opacity: 0.8;
-      font-size: 1em;
-      user-select: none;
-      z-index: 1000;
-    }
-
-    /* Animation for snowflake falling */
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
+    <!-- Inline Styles -->
+    <style>
+      /* Styles for snowflake animation */
+      .snowflake {
+        position: absolute;
+        top: -10px;
+        color: #fff;
+        opacity: 0.8;
+        font-size: 1em;
+        user-select: none;
+        z-index: 1000;
       }
-    }
 
-    /* Styles for countdown container */
-    .countdown-container {
-      text-align: center;
-      margin-top: 20px; /* Adjust the margin as needed */
-    }
-  </style>
-</head>
-<body>
-  <!-- Main container -->
-  <div class="container">
-    <!-- Countdown section -->
-    <div class="countdown-container">
-      <h1 class="header_text">Yippie!!!</h1>
-      <div id="countdown"></div>
+      /* Animation for snowflake falling */
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+        }
+      }
+
+      /* Styles for countdown container */
+      .countdown-container {
+        text-align: center;
+        margin-top: 20px; /* Adjust the margin as needed */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main container -->
+    <div class="container">
+      <!-- Countdown section -->
+      <div class="countdown-container">
+        <h1 class="header_text">Yippie!!!</h1>
+        <div id="countdown"></div>
+      </div>
+
+      <!-- Gif container -->
+      <div class="gif_container">
+        <img
+          src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmw5Yng1c3V2YzFuOGw3bDAzNmw4cDZnY2tuM2doNm03ZHdsZWVraiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/sg32LhHk9RVLi/giphy.gif"
+          alt="Cute animated illustration"
+        />
+      </div>
+
+      <!-- Countdown message -->
+      <p class="text">Counting down the seconds until our hearts celebrate New Year together! See you soon, my love.</p>
     </div>
 
-    <!-- Gif container -->
-    <div class="gif_container">
-      <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmw5Yng1c3V2YzFuOGw3bDAzNmw4cDZnY2tuM2doNm03ZHdsZWVraiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/sg32LhHk9RVLi/giphy.gif" alt="Cute animated illustration"/>
-    </div>
+    <!-- JavaScript for Snowflakes and Countdown -->
+    <script>
+      // Function to create a snowflake element
+      function createSnowflake() {
+        const snowflakeElement = document.createElement("div");
+        snowflakeElement.classList.add("snowflake");
+        snowflakeElement.textContent = "♡"; // Heart emoji
+        document.body.appendChild(snowflakeElement);
 
-    <!-- Countdown message -->
-    <p class="text">
-      Counting down the seconds until our hearts celebrate New Year together!
-      See you soon, my love.
-    </p>
-  </div>
+        const fontSize = Math.random() * 20 + 10;
+        snowflakeElement.style.fontSize = `${fontSize}px`;
 
-  <!-- JavaScript for Snowflakes and Countdown -->
-  <script>
-    // Function to create a snowflake element
-    function createSnowflake() {
-      const snowflakeElement = document.createElement("div");
-      snowflakeElement.classList.add("snowflake");
-      snowflakeElement.textContent = "♡"; // Snowflake emoji
-      document.body.appendChild(snowflakeElement);
+        const position = Math.random() * 100;
+        snowflakeElement.style.left = `${position}vw`;
 
-      const fontSize = Math.random() * 20 + 10;
-      snowflakeElement.style.fontSize = `${fontSize}px`;
+        snowflakeElement.style.animationName = "fall";
+        snowflakeElement.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        snowflakeElement.style.animationTimingFunction = "linear";
+        snowflakeElement.style.animationIterationCount = "infinite";
 
-      const position = Math.random() * 100;
-      snowflakeElement.style.left = `${position}vw`;
+        // Remove snowflake after it has fallen out of view
+        snowflakeElement.addEventListener("animationiteration", () => {
+          snowflakeElement.remove();
+        });
+      }
 
-      snowflakeElement.style.animationName = "fall";
-      snowflakeElement.style.animationDuration = `${Math.random() * 3 + 2}s`;
-      snowflakeElement.style.animationTimingFunction = "linear";
-      snowflakeElement.style.animationIterationCount = "infinite";
+      // Create a new snowflake every 250ms
+      setInterval(createSnowflake, 250);
 
-      // Remove snowflake after it has fallen out of view
-      snowflakeElement.addEventListener("animationiteration", () => {
-        snowflakeElement.remove();
-      });
-    }
+      // Countdown to New Year
+      function updateCountdown() {
+        const now = new Date();
+        const newYear = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0, 0); // Next year's New Year
+        const timeRemaining = newYear - now;
 
-    // Create a new snowflake every 250ms
-    setInterval(createSnowflake, 250);
+        // Calculate remaining months, days, hours, minutes, and seconds
+        const months = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 30));
+        const days = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    // Countdown to New Year
-    function updateCountdown() {
-      const now = new Date();
-      const newYear = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0, 0); // Next year's New Year
-      const timeRemaining = newYear - now;
+        // Update the countdown display
+        const countdownElement = document.getElementById("countdown");
+        countdownElement.textContent = `Left: ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+      }
 
-      // Calculate remaining months, days, hours, minutes, and seconds
-      const months = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 30));
-      const days = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-      // Update the countdown display
-      const countdownElement = document.getElementById("countdown");
-      countdownElement.textContent = `Left: ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-    }
-
-    // Update countdown every second and on initial load
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initial update
-  </script>
-</body>
+      // Update countdown every second and on initial load
+      setInterval(updateCountdown, 1000);
+      updateCountdown(); // Initial update
+    </script>
+  </body>
 </html>
